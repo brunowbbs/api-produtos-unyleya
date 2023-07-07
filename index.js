@@ -24,15 +24,15 @@ server.get("/", (req, res) => {
   return res.json({
     message: "Seja bem vindo à API - Wesley Bruno!!!😉",
     product_list: {
-      url: "https://api-products-dh-next.vercel.app/products",
+      url: "api-produtos-unyleya.vercel.app/products",
       method: "GET",
     },
     product_details: {
-      url: "https://api-products-dh-next.vercel.app/products/[id]",
+      url: "api-produtos-unyleya.vercel.app/products/[id]",
       method: "GET",
     },
     create_product: {
-      url: "https://api-products-dh-next.vercel.app/products",
+      url: "api-produtos-unyleya.vercel.app/products",
       method: "POST",
       body: {
         nome: "Nome do produto",
@@ -43,7 +43,7 @@ server.get("/", (req, res) => {
       },
     },
     edit_product: {
-      url: "https://api-products-dh-next.vercel.app/products/[id]",
+      url: "api-produtos-unyleya.vercel.app/products/[id]",
       method: "PUT",
       body: {
         nome: "Nome do produto",
@@ -54,7 +54,7 @@ server.get("/", (req, res) => {
       },
     },
     remove_product: {
-      url: "https://api-products-dh-next.vercel.app/products/[id]",
+      url: "api-produtos-unyleya.vercel.app/products/[id]",
       method: "DELETE",
     },
   });

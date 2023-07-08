@@ -10,7 +10,7 @@ const ProductSchema = new Schema({
     required: true,
   },
   fornecedor: {
-    type: Number,
+    type: String,
     required: true,
   },
   url_imagem: {

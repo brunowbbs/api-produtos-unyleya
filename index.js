@@ -1,10 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 var cors = require("cors");
+const jwt = require("jsonwebtoken");
 
 const PORT = process.env.PORT || 3001;
 
 const ProductSchema = require("./schemas/ProductSchema");
+const { authorization } = require("./services/authorization");
 
 const TOKEN = "eccd804f-9eea-43c9-8950-6e12073eccf0";
 
@@ -176,6 +178,40 @@ server.put("/produtos/:id", async (req, res) => {
 });
 
 server.delete("/produtos/:id", async (req, res) => {
+  const { id } = req.params;
+  const todo = await ProductSchema.deleteOne({ _id: id });
+  return res.json({ message: "Successfully deleted" });
+});
+
+// ------
+server.get("/production/fornecedores", (req, res) => {
+  return res.json(fornecedores);
+});
+
+//Product
+server.get("/production/produtos", authorization, async (req, res) => {
+  const products = await ProductSchema.find();
+  return res.json(products);
+});
+
+server.get("/production/produtos/:id", authorization, async (req, res) => {
+  const { id } = req.params;
+  const product = await ProductSchema.findById(id);
+  return res.json(product);
+});
+
+server.post("/production/produtos", authorization, async (req, res) => {
+  const result = await ProductSchema.create(req.body);
+  return res.status(201).json(result);
+});
+
+server.put("/production/produtos/:id", authorization, async (req, res) => {
+  const { id } = req.params;
+  const todo = await ProductSchema.findOneAndUpdate({ _id: id }, req.body);
+  return res.json(todo);
+});
+
+server.delete("/production/produtos/:id", authorization, async (req, res) => {
   const { id } = req.params;
   const todo = await ProductSchema.deleteOne({ _id: id });
   return res.json({ message: "Successfully deleted" });

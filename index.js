@@ -6,6 +6,8 @@ const PORT = process.env.PORT || 3001;
 
 const ProductSchema = require("./schemas/ProductSchema");
 
+const TOKEN = "eccd804f-9eea-43c9-8950-6e12073eccf0";
+
 const server = express();
 
 server.use(cors());
@@ -116,6 +118,34 @@ const fornecedores = [
     label: "Outros",
   },
 ];
+
+//auth
+server.post("/auth", async (req, res) => {
+  const { email, password } = req.body;
+
+  const token = jwt.sign(
+    {
+      expiresIn: "365d",
+    },
+    TOKEN
+  );
+
+  if (!email || !password) {
+    return res
+      .status(403)
+      .json({ message: "Email and password values are required" });
+  }
+
+  if (email === "admin@admin.com" && password === "123456") {
+    return res.status(200).json({
+      name: "Admin Unyleya",
+      email,
+      token,
+    });
+  }
+
+  return res.status(400).json({ message: "Invalid email or password" });
+});
 
 //Fornecedores
 server.get("/fornecedores", (req, res) => {
